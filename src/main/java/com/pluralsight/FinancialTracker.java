@@ -223,7 +223,14 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
-    private static void displayLedger() { /* TODO – print all transactions in column format */ }
+    private static void displayLedger() {
+
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
+        }
+
+        /* TODO – print all transactions in column format */
+    }
 
     private static void displayDeposits() { /* TODO – only amount > 0               */ }
 
