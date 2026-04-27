@@ -109,6 +109,12 @@ public class FinancialTracker {
      * Store the amount as-is (positive) and append to the file.
      */
     private static void addDeposit(Scanner scanner) {
+
+        System.out.print("Enter date of transaction (yyyy-MM-dd): ");
+        String userInput = scanner.nextLine();
+        LocalDate date = LocalDate.parse(userInput, DateTimeFormatter.ofPattern(DATE_PATTERN));
+
+        System.out.println(date);
         // TODO
     }
 
