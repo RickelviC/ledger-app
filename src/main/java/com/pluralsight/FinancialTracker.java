@@ -159,6 +159,37 @@ public class FinancialTracker {
      * then converted to a negative amount before storing.
      */
     private static void addPayment(Scanner scanner) {
+        try {
+            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
+
+            System.out.print("Enter date of transaction (yyyy-MM-dd): ");
+            String inputDate = scanner.nextLine().trim();
+            LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
+
+            System.out.print("Enter time of transaction (HH:mm:ss): ");
+            String inputTime = scanner.nextLine().trim();
+            LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
+
+            System.out.print("Enter description of transaction: ");
+            String inputDescription = scanner.nextLine().trim();
+
+            System.out.print("Enter vendor of transaction: ");
+            String inputVendor = scanner.nextLine().trim();
+
+            System.out.print("Enter amount of transaction: ");
+            double inputAmount = scanner.nextDouble();
+            double amount = -Math.abs(inputAmount);
+            scanner.nextLine();
+
+            Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
+            transactions.add(transaction);
+
+            buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount + "\n");
+            buffWriter.close();
+
+        } catch (Exception ex) {
+            System.err.println("something went wrong!!!");
+        }
         // TODO
     }
 
