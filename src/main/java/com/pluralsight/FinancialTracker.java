@@ -113,21 +113,21 @@ public class FinancialTracker {
             BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
             System.out.print("Enter date of transaction (yyyy-MM-dd): ");
-            String inputDate = scanner.nextLine();
+            String inputDate = scanner.nextLine().trim();
             LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
 
             System.out.print("Enter time of transaction (HH:mm:ss): ");
-            String inputTime = scanner.nextLine();
+            String inputTime = scanner.nextLine().trim();
             LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
 
             System.out.print("Enter description of transaction: ");
-            String inputDescription = scanner.nextLine();
+            String inputDescription = scanner.nextLine().trim();
 
             System.out.print("Enter vendor of transaction: ");
-            String inputVendor = scanner.nextLine();
+            String inputVendor = scanner.nextLine().trim();
 
             System.out.print("Enter amount of transaction: ");
-            double inputAmount = scanner.nextInt();
+            double inputAmount = scanner.nextDouble();
             double amount = Math.abs(inputAmount);
             scanner.nextLine();
 
@@ -135,9 +135,7 @@ public class FinancialTracker {
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
 
-
-            buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount);
-            buffWriter.newLine();
+            buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount + "\n");
             buffWriter.close();
 
 
