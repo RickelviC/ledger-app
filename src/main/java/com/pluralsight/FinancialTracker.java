@@ -116,6 +116,14 @@ public class FinancialTracker {
             String inputDate = scanner.nextLine().trim();
             LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
 
+            /*String inputDate = "";
+
+            while (!inputDate.equals(String.valueOf(DATE_FMT))){
+                System.out.println("please Enter date with this format (yyyy-MM-dd): ");
+                inputDate = scanner.nextLine().trim();
+
+            }*/
+
             System.out.print("Enter time of transaction (HH:mm:ss): ");
             String inputTime = scanner.nextLine().trim();
             LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
@@ -131,13 +139,11 @@ public class FinancialTracker {
             double amount = Math.abs(inputAmount);
             scanner.nextLine();
 
-
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
 
             buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount + "\n");
             buffWriter.close();
-
 
         } catch (Exception ex) {
             System.err.println("something went wrong!!!");
