@@ -1,8 +1,6 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -110,11 +108,42 @@ public class FinancialTracker {
      */
     private static void addDeposit(Scanner scanner) {
 
-        System.out.print("Enter date of transaction (yyyy-MM-dd): ");
-        String userInput = scanner.nextLine();
-        LocalDate date = LocalDate.parse(userInput, DateTimeFormatter.ofPattern(DATE_PATTERN));
+        try {
+            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
-        System.out.println(date);
+            System.out.print("Enter date of transaction (yyyy-MM-dd): ");
+            String inputDate = scanner.nextLine();
+            LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
+
+            System.out.print("Enter time of transaction (HH:mm:ss): ");
+            String inputTime = scanner.nextLine();
+            LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
+
+            System.out.print("Enter description of transaction: ");
+            String inputDescription = scanner.nextLine();
+
+            System.out.print("Enter vendor of transaction: ");
+            String inputVendor = scanner.nextLine();
+
+            System.out.print("Enter amount of transaction: ");
+            int inputAmount = scanner.nextInt();
+            scanner.nextLine();
+            int amount = Math.abs(inputAmount);
+
+
+            Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
+            transactions.add(transaction);
+
+            buffWriter.write(date +"|"+ time +"|"+ inputDescription +"|"+ inputVendor +"|"+ amount + "\n");
+
+            buffWriter.close();
+
+
+        } catch (Exception ex) {
+            System.err.println("something went wrong!!!");
+        }
+
+
         // TODO
     }
 
