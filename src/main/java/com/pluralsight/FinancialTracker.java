@@ -285,10 +285,18 @@ public class FinancialTracker {
        Reporting helpers
        ------------------------------------------------------------------ */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
+        for (Transaction transaction : transactions) {
+            //String dateTime = transaction.getDayOfTransactions() + " " + transaction.getTimeOfTransactions();
+        }
         // TODO – iterate transactions, print those within the range
     }
 
     private static void filterTransactionsByVendor(String vendor) {
+        for (Transaction transaction : transactions) {
+            if (transaction.getVendor().equalsIgnoreCase(vendor)){
+                System.out.println(transaction);
+            }
+        }
         // TODO – iterate transactions, print those with matching vendor
     }
 
