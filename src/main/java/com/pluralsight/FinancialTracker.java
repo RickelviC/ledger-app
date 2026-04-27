@@ -286,7 +286,9 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         for (Transaction transaction : transactions) {
-            //String dateTime = transaction.getDayOfTransactions() + " " + transaction.getTimeOfTransactions();
+            if (transaction.getDayOfTransactions().isBefore(start)){
+
+            }
         }
         // TODO – iterate transactions, print those within the range
     }
