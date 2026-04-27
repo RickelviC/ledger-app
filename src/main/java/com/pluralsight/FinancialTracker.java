@@ -86,8 +86,8 @@ public class FinancialTracker {
                 String vendor = divider[3];
                 double amount = Double.parseDouble(divider[4]);
 
-                Transaction product = new Transaction(dayOfTransactions, timeOfTransactions, description, vendor, amount);
-                transactions.add(product);
+                Transaction transaction = new Transaction(dayOfTransactions, timeOfTransactions, description, vendor, amount);
+                transactions.add(transaction);
 
             }
         } catch (Exception ex) {
