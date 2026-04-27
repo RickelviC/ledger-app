@@ -70,7 +70,8 @@ public class FinancialTracker {
      * • If the file doesn’t exist, create an empty one so that future writes succeed.
      * • Each line looks like: date|time|description|vendor|amount
      */
-    public static void loadTransactions(String fileName) {String line;
+    public static void loadTransactions(String fileName) {
+        String line;
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
@@ -126,16 +127,17 @@ public class FinancialTracker {
             String inputVendor = scanner.nextLine();
 
             System.out.print("Enter amount of transaction: ");
-            int inputAmount = scanner.nextInt();
+            double inputAmount = scanner.nextInt();
+            double amount = Math.abs(inputAmount);
             scanner.nextLine();
-            int amount = Math.abs(inputAmount);
 
 
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
 
-            buffWriter.write(date +"|"+ time +"|"+ inputDescription +"|"+ inputVendor +"|"+ amount + "\n");
 
+            buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount);
+            buffWriter.newLine();
             buffWriter.close();
 
 
