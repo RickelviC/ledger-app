@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -294,12 +295,16 @@ public class FinancialTracker {
                     LocalDate firstDayOfLastYear = LocalDate.now().minusYears(1).with(TemporalAdjusters.firstDayOfYear());
                     LocalDate lastDayOfLastYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).minusDays(1);
 
-                    filterTransactionsByDate(firstDayOfLastYear,lastDayOfLastYear);
-
+                    filterTransactionsByDate(firstDayOfLastYear, lastDayOfLastYear);
 
                     /* TODO – previous year report  */
                 }
-                case "5" -> {/* TODO – prompt for vendor then report */ }
+                case "5" -> {
+                    System.out.println("Enter name of vendor");
+                    String vendor = scanner.nextLine();
+
+                    filterTransactionsByVendor(vendor);
+                    /* TODO – prompt for vendor then report */ }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option");
@@ -329,6 +334,19 @@ public class FinancialTracker {
     }
 
     private static void customSearch(Scanner scanner) {
+
+        System.out.println("Enter starting Time (yyyy-MM-dd): ");
+        LocalDate start = LocalDate.parse(scanner.nextLine());
+
+        System.out.println("Enter starting Time (HH:mm:ss): ");
+        LocalDate end = LocalDate.parse(scanner.nextLine());
+
+
+            if (start.isSupported()) {
+
+            }
+
+
         // TODO – prompt for any combination of date range, description,
         //        vendor, and exact amount, then display matches
     }
