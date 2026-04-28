@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -271,7 +272,7 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1" -> {
-                    filterTransactionsByDate(LocalDate.now().withDayOfMonth(1) ,LocalDate.now());
+                    filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
                     /* TODO – month-to-date report */
                 }
                 case "2" -> {
@@ -282,7 +283,13 @@ public class FinancialTracker {
                     filterTransactionsByDate(firstDayOfLastMonth, lastDayLastOfMonth);
                     /* TODO – previous month report */
                 }
-                case "3" -> {/* TODO – year-to-date report   */ }
+                case "3" -> {
+                    LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+
+                    filterTransactionsByDate(firstDayOfYear, LocalDate.now());
+
+                    /* TODO – year-to-date report   */
+                }
                 case "4" -> {/* TODO – previous year report  */ }
                 case "5" -> {/* TODO – prompt for vendor then report */ }
                 case "6" -> customSearch(scanner);
