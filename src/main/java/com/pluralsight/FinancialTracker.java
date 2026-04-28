@@ -117,14 +117,6 @@ public class FinancialTracker {
             String inputDate = scanner.nextLine().trim();
             LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
 
-            /*String inputDate = "";
-
-            while (!inputDate.equals(String.valueOf(DATE_FMT))){
-                System.out.println("please Enter date with this format (yyyy-MM-dd): ");
-                inputDate = scanner.nextLine().trim();
-
-            }*/
-
             System.out.print("Enter time of transaction (HH:mm:ss): ");
             String inputTime = scanner.nextLine().trim();
             LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
@@ -270,10 +262,7 @@ public class FinancialTracker {
             String input = scanner.nextLine().trim();
 
             switch (input) {
-                case "1" -> {
-                    filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
-                    /* TODO – month-to-date report */
-                }
+                case "1" -> /* TODO – month-to-date report */ filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
                 case "2" -> {
 
                     LocalDate firstDayOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
