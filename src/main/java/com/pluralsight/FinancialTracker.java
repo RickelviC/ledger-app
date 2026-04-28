@@ -304,7 +304,8 @@ public class FinancialTracker {
                     String vendor = scanner.nextLine();
 
                     filterTransactionsByVendor(vendor);
-                    /* TODO – prompt for vendor then report */ }
+                    /* TODO – prompt for vendor then report */
+                }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
                 default -> System.out.println("Invalid option");
@@ -335,12 +336,11 @@ public class FinancialTracker {
 
     private static void customSearch(Scanner scanner) {
 
-
         System.out.println("Enter starting Date (yyyy-MM-dd): ");
         String start = scanner.nextLine();
         LocalDate startingDate = null;
 
-        if (start.isEmpty()){
+        if (start.isEmpty()) {
             startingDate = parseDate(start);
         }
 
@@ -349,12 +349,9 @@ public class FinancialTracker {
 
         LocalDate endingDate = null;
 
-        if (end.isEmpty()){
+        if (end.isEmpty()) {
             startingDate = parseDate(start);
         }
-
-
-
         // TODO – prompt for any combination of date range, description,
         //        vendor, and exact amount, then display matches
     }
@@ -364,15 +361,20 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     private static LocalDate parseDate(String s) {
 
-        LocalDate date = LocalDate.parse(s, DATE_FMT);
-
-        /* TODO – return LocalDate or null */
-        return null;
+        try {
+            return LocalDate.parse(s, DATE_FMT);
+            /* TODO – return LocalDate or null */
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     private static Double parseDouble(String s) {
-        double money = Double.parseDouble(s);
-        /* TODO – return Double or null */
-        return null;
+        try {
+            return Double.parseDouble(s);
+            /* TODO – return Double or null */
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
