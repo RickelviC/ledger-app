@@ -61,6 +61,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "dayOfTransactions: " + dayOfTransactions + " | timeOfTransactions: " + timeOfTransactions + " | description: " + description + " | vendor: " + vendor + " | amount : " + amount;
+        return String.format("dayOfTransactions: %s | timeOfTransactions: %s | description: %s | vendor: %s | amount: %.2f",
+                dayOfTransactions, timeOfTransactions, description, vendor, amount);
     }
 }

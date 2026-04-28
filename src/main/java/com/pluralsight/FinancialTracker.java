@@ -167,7 +167,7 @@ public class FinancialTracker {
 
             System.out.print("Enter date of transaction (yyyy-MM-dd): ");
             String inputDate = scanner.nextLine().trim();
-            LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
+            LocalDate date = parseDate(inputDate);
 
             System.out.print("Enter time of transaction (HH:mm:ss): ");
             String inputTime = scanner.nextLine().trim();
@@ -335,16 +335,24 @@ public class FinancialTracker {
 
     private static void customSearch(Scanner scanner) {
 
-        System.out.println("Enter starting Time (yyyy-MM-dd): ");
-        LocalDate start = LocalDate.parse(scanner.nextLine());
 
-        System.out.println("Enter starting Time (HH:mm:ss): ");
-        LocalDate end = LocalDate.parse(scanner.nextLine());
+        System.out.println("Enter starting Date (yyyy-MM-dd): ");
+        String start = scanner.nextLine();
+        LocalDate startingDate = null;
 
+        if (start.isEmpty()){
+            startingDate = parseDate(start);
+        }
 
-            if (start.isSupported()) {
+        System.out.println("Enter ending Date (yyyy-MM-dd): ");
+        String end = scanner.nextLine();
 
-            }
+        LocalDate endingDate = null;
+
+        if (end.isEmpty()){
+            startingDate = parseDate(start);
+        }
+
 
 
         // TODO – prompt for any combination of date range, description,
@@ -355,12 +363,16 @@ public class FinancialTracker {
        Utility parsers (you can reuse in many places)
        ------------------------------------------------------------------ */
     private static LocalDate parseDate(String s) {
+
+        LocalDate date = LocalDate.parse(s, DATE_FMT);
+
         /* TODO – return LocalDate or null */
         return null;
     }
 
     private static Double parseDouble(String s) {
-        /* TODO – return Double   or null */
+        double money = Double.parseDouble(s);
+        /* TODO – return Double or null */
         return null;
     }
 }
