@@ -3,9 +3,7 @@ package com.pluralsight;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -337,30 +335,57 @@ public class FinancialTracker {
     private static void customSearch(Scanner scanner) {
 
         System.out.println("Enter starting Date (yyyy-MM-dd): ");
-        String start = scanner.nextLine();
-        LocalDate startingDate = null;
-
-        if (start.isEmpty()) {
-            startingDate = parseDate(start);
-        }
+        LocalDate startingDate = parseDate(scanner.nextLine().trim());
 
         System.out.println("Enter ending Date (yyyy-MM-dd): ");
-        String end = scanner.nextLine();
+        LocalDate endingDate = parseDate(scanner.nextLine().trim());
 
-        LocalDate endingDate = null;
+        System.out.println("enter a description: ");
+        String description = scanner.nextLine().trim();
 
-        if (end.isEmpty()) {
-            startingDate = parseDate(start);
+        System.out.println("Enter name of vendor");
+        String vendor = scanner.nextLine().trim();
+
+        System.out.println("Enter amount");
+        Double amount = parseDouble(scanner.nextLine().trim());
+
+        for (Transaction transaction : transactions) {
+            boolean onOrOff = true;
+
+            //is not null and is before start date
+            if (startingDate != null && transaction.getDayOfTransactions().isBefore(startingDate)){
+                onOrOff = false;
+            }
+            // is not null and is after the end date
+            if (endingDate != null && transaction.getDayOfTransactions().isAfter(endingDate)){
+                onOrOff = false;
+            }
+            //is not empty and does not match any description
+            if (!description.isEmpty() && !transaction.getDescription().equalsIgnoreCase(description)){
+                onOrOff = false;
+            }
+            //is not empty and does not match any vendor
+            if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)){
+                onOrOff = false;
+            }
+
+            if (amount != null && transaction.getAmount() >= amount){
+                onOrOff = false;
+            }
+
+            //only prints if onOrOff is true
+            if (onOrOff){
+                System.out.println(transaction);
+            }
         }
+
         // TODO – prompt for any combination of date range, description,
         //        vendor, and exact amount, then display matches
     }
-
     /* ------------------------------------------------------------------
        Utility parsers (you can reuse in many places)
        ------------------------------------------------------------------ */
     private static LocalDate parseDate(String s) {
-
         try {
             return LocalDate.parse(s, DATE_FMT);
             /* TODO – return LocalDate or null */
@@ -368,7 +393,6 @@ public class FinancialTracker {
             return null;
         }
     }
-
     private static Double parseDouble(String s) {
         try {
             return Double.parseDouble(s);
