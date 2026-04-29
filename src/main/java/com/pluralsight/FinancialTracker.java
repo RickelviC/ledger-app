@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -77,6 +78,7 @@ public class FinancialTracker {
         String line;
 
         try {
+
             BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
 
             while ((line = reader.readLine()) != null) {
@@ -92,6 +94,7 @@ public class FinancialTracker {
                 transactions.add(transaction);
 
             }
+            reader.close();
         } catch (Exception ex) {
             System.err.println("Something went wrong");
         }
@@ -113,8 +116,6 @@ public class FinancialTracker {
     private static void addDeposit(Scanner scanner) {
 
         try {
-            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
-
             System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
             String inputDateTime = scanner.nextLine().trim();
             LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
@@ -140,13 +141,15 @@ public class FinancialTracker {
                 inputAmount = scanner.nextDouble();
                 scanner.nextLine();
             }
-            double amount = Math.abs(inputAmount);
+            double amount = inputAmount;
 
             LocalDate date = dateTime.toLocalDate();
             LocalTime time = dateTime.toLocalTime();
 
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
+
+            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
             buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount + "\n");
             buffWriter.close();
@@ -164,8 +167,6 @@ public class FinancialTracker {
      */
     private static void addPayment(Scanner scanner) {
         try {
-            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
-
             System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
             String inputDateTime = scanner.nextLine().trim();
             LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
@@ -191,13 +192,15 @@ public class FinancialTracker {
                 inputAmount = scanner.nextDouble();
                 scanner.nextLine();
             }
-            double amount = -Math.abs(inputAmount);
+            double amount = inputAmount;
 
             LocalDate date = dateTime.toLocalDate();
             LocalTime time = dateTime.toLocalTime();
 
-            Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
+            Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, -amount);
             transactions.add(transaction);
+
+            BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
             buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount + "\n");
             buffWriter.close();
@@ -212,7 +215,7 @@ public class FinancialTracker {
        Ledger menu
        ------------------------------------------------------------------ */
     private static void ledgerMenu(Scanner scanner) {
-        transactions.sort(Comparator.comparing(Transaction::getDayOfTransactions));
+        transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime));
 
         boolean running = true;
         while (running) {
@@ -299,7 +302,7 @@ public class FinancialTracker {
                 }
                 case "3" -> {
                     //filters transactions from the first of this year to today
-                    LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+                    LocalDate firstDayOfYear = LocalDate.now().withDayOfYear(1);
 
                     filterTransactionsByDate(firstDayOfYear, LocalDate.now());
 
@@ -334,7 +337,7 @@ public class FinancialTracker {
        ------------------------------------------------------------------ */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         for (Transaction transaction : transactions) {
-            if (transaction.getDayOfTransactions().isBefore(end) && transaction.getDayOfTransactions().isAfter(start)) {
+            if (transaction.getDate().isBefore(end) && transaction.getDate().isAfter(start)) {
                 System.out.println(transaction);
             }
         }
@@ -352,19 +355,19 @@ public class FinancialTracker {
 
     private static void customSearch(Scanner scanner) {
 
-        System.out.println("Enter starting Date (yyyy-MM-dd): ");
+        System.out.println("Enter starting Date Or skip by pressing Enter (yyyy-MM-dd): ");
         LocalDate startingDate = parseDate(scanner.nextLine().trim());
 
-        System.out.println("Enter ending Date (yyyy-MM-dd): ");
+        System.out.println("Enter ending Date Or skip by pressing Enter (yyyy-MM-dd): ");
         LocalDate endingDate = parseDate(scanner.nextLine().trim());
 
-        System.out.println("enter a description: ");
+        System.out.println("enter a description Or skip by pressing Enter: ");
         String description = scanner.nextLine().trim();
 
-        System.out.println("Enter name of vendor");
+        System.out.println("Enter name of vendor Or skip by pressing Enter: ");
         String vendor = scanner.nextLine().trim();
 
-        System.out.println("Enter amount");
+        System.out.println("Enter amount Or skip by pressing Enter: ");
         Double amount = parseDouble(scanner.nextLine().trim());
 
         // goes though every transaction in the array and only prints if everything is true
@@ -372,11 +375,11 @@ public class FinancialTracker {
             boolean onOrOff = true;
 
             //is not null and is before start date
-            if (startingDate != null && transaction.getDayOfTransactions().isBefore(startingDate)) {
+            if (startingDate != null && transaction.getDate().isBefore(startingDate)) {
                 onOrOff = false;
             }
             // is not null and is after the end date
-            if (endingDate != null && transaction.getDayOfTransactions().isAfter(endingDate)) {
+            if (endingDate != null && transaction.getDate().isAfter(endingDate)) {
                 onOrOff = false;
             }
             //is not empty and does not match any description
@@ -395,6 +398,8 @@ public class FinancialTracker {
             //only prints if onOrOff is true
             if (onOrOff) {
                 System.out.println(transaction);
+            }else {
+                System.out.println("No matching items found");
             }
         }
 

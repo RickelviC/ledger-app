@@ -4,35 +4,35 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Transaction {
-    private LocalDate dayOfTransactions;
-    private LocalTime timeOfTransactions;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
 
-    public Transaction(LocalDate dayOfTransactions, LocalTime timeOfTransactions, String description, String vendor, double amount) {
-        this.dayOfTransactions = dayOfTransactions;
-        this.timeOfTransactions = timeOfTransactions;
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
+        this.date = date;
+        this.time = time;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
     }
 
 
-    public LocalDate getDayOfTransactions() {
-        return dayOfTransactions;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDayOfTransactions(LocalDate dayOfTransactions) {
-        this.dayOfTransactions = dayOfTransactions;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public LocalTime getTimeOfTransactions() {
-        return timeOfTransactions;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setTimeOfTransactions(LocalTime timeOfTransactions) {
-        this.timeOfTransactions = timeOfTransactions;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public String getDescription() {
@@ -61,7 +61,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return String.format("dayOfTransactions: %s | timeOfTransactions: %s | description: %s | vendor: %s | amount: %.2f",
-                dayOfTransactions, timeOfTransactions, description, vendor, amount);
+        return String.format("%s | %s | %s | %s | %.2f",
+                date, time, description, vendor, amount);
     }
 }
