@@ -39,8 +39,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 - Any additional libraries or frameworks used in the project.
 
 ## Demo
-https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnJldHd2amVubXlsYzFqbGh3djRybzltdjN5ZmdnenR3MHQ1cjBzdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1XDzNHIqCVKih0GP1e/giphy.gif
-
+![Demo](./img/ledger-app.gif)
 ## Future Work
 
 Outline potential future enhancements or functionalities you might consider adding:
