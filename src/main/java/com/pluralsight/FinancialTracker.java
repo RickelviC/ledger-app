@@ -84,8 +84,8 @@ public class FinancialTracker {
             while ((line = reader.readLine()) != null) {
 
                 String[] divider = line.split("\\|");
-                LocalDate dayOfTransactions = LocalDate.parse(divider[0]);
-                LocalTime timeOfTransactions = LocalTime.parse(divider[1]);
+                LocalDate dayOfTransactions = LocalDate.parse(divider[0],DATE_FMT);
+                LocalTime timeOfTransactions = LocalTime.parse(divider[1],TIME_FMT);
                 String description = divider[2];
                 String vendor = divider[3];
                 double amount = Double.parseDouble(divider[4]);
@@ -116,9 +116,16 @@ public class FinancialTracker {
     private static void addDeposit(Scanner scanner) {
 
         try {
-            System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
-            String inputDateTime = scanner.nextLine().trim();
-            LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
+            LocalDateTime dateTime = null;
+            while (dateTime == null) {
+                System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
+                String inputDateTime = scanner.nextLine().trim();
+                try {
+                    dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
+                } catch (Exception ex) {
+                    System.out.println("Invalid date Or time");
+                }
+            }
 
             System.out.print("Enter description of transaction: ");
             String inputDescription = scanner.nextLine().trim();
@@ -135,11 +142,17 @@ public class FinancialTracker {
             }
 
             System.out.print("Enter amount of transaction: ");
-            double inputAmount = scanner.nextDouble();
+            double inputAmount = 0;
             while (inputAmount <= 0) {
-                System.out.print("Enter A bigger amount for the transaction: ");
-                inputAmount = scanner.nextDouble();
-                scanner.nextLine();
+                String userAmount = scanner.nextLine().trim();
+                try {
+                    inputAmount = parseDouble(userAmount);
+                    if (inputAmount <= 0) {
+                        System.out.print("Enter a bigger amount for the transaction: ");
+                    }
+                } catch (Exception ex) {
+                    System.out.print("Please enter a valid amount: ");
+                }
             }
             double amount = inputAmount;
 
@@ -167,9 +180,16 @@ public class FinancialTracker {
      */
     private static void addPayment(Scanner scanner) {
         try {
-            System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
-            String inputDateTime = scanner.nextLine().trim();
-            LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
+            LocalDateTime dateTime = null;
+            while (dateTime == null) {
+                System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
+                String inputDateTime = scanner.nextLine().trim();
+                try {
+                    dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
+                } catch (Exception ex) {
+                    System.out.println("Invalid date Or time");
+                }
+            }
 
             System.out.print("Enter description of transaction: ");
             String inputDescription = scanner.nextLine().trim();
@@ -186,11 +206,17 @@ public class FinancialTracker {
             }
 
             System.out.print("Enter amount of transaction: ");
-            double inputAmount = scanner.nextDouble();
+            double inputAmount = 0;
             while (inputAmount <= 0) {
-                System.out.print("Enter A bigger amount for the transaction: ");
-                inputAmount = scanner.nextDouble();
-                scanner.nextLine();
+                String userAmount = scanner.nextLine().trim();
+                try {
+                    inputAmount = parseDouble(userAmount);
+                    if (inputAmount <= 0) {
+                        System.out.print("Enter a bigger amount for the transaction: ");
+                    }
+                } catch (Exception ex) {
+                    System.out.print("Please enter a valid amount: ");
+                }
             }
             double amount = inputAmount;
 
