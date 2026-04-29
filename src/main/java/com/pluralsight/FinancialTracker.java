@@ -2,11 +2,13 @@ package com.pluralsight;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Formatter;
 import java.util.Scanner;
 
 /*
@@ -114,24 +116,35 @@ public class FinancialTracker {
         try {
             BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
-            System.out.print("Enter date of transaction (yyyy-MM-dd): ");
-            String inputDate = scanner.nextLine().trim();
-            LocalDate date = LocalDate.parse(inputDate, DATE_FMT);
-
-            System.out.print("Enter time of transaction (HH:mm:ss): ");
-            String inputTime = scanner.nextLine().trim();
-            LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
+            System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
+            String inputDateTime = scanner.nextLine().trim();
+            LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
 
             System.out.print("Enter description of transaction: ");
             String inputDescription = scanner.nextLine().trim();
+            while (inputDescription.isEmpty()) {
+                System.out.print("Please Enter a DESCRIPTION for the transaction: ");
+                inputDescription = scanner.nextLine().trim();
+            }
 
             System.out.print("Enter vendor of transaction: ");
             String inputVendor = scanner.nextLine().trim();
+            while (inputVendor.isEmpty()) {
+                System.out.print("Please Enter a VENDOR for the transaction: ");
+                inputVendor = scanner.nextLine().trim();
+            }
 
             System.out.print("Enter amount of transaction: ");
             double inputAmount = scanner.nextDouble();
+            while (inputAmount <= 0) {
+                System.out.print("Enter A bigger amount for the transaction: ");
+                inputAmount = scanner.nextDouble();
+                scanner.nextLine();
+            }
             double amount = Math.abs(inputAmount);
-            scanner.nextLine();
+
+            LocalDate date = dateTime.toLocalDate();
+            LocalTime time = dateTime.toLocalTime();
 
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
@@ -265,7 +278,8 @@ public class FinancialTracker {
             String input = scanner.nextLine().trim();
 
             switch (input) {
-                case "1" -> /* TODO – month-to-date report */ filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
+                case "1" -> /* TODO – month-to-date report */
+                        filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
                 case "2" -> {
 
                     LocalDate firstDayOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
@@ -345,28 +359,28 @@ public class FinancialTracker {
             boolean onOrOff = true;
 
             //is not null and is before start date
-            if (startingDate != null && transaction.getDayOfTransactions().isBefore(startingDate)){
+            if (startingDate != null && transaction.getDayOfTransactions().isBefore(startingDate)) {
                 onOrOff = false;
             }
             // is not null and is after the end date
-            if (endingDate != null && transaction.getDayOfTransactions().isAfter(endingDate)){
+            if (endingDate != null && transaction.getDayOfTransactions().isAfter(endingDate)) {
                 onOrOff = false;
             }
             //is not empty and does not match any description
-            if (!description.isEmpty() && !transaction.getDescription().equalsIgnoreCase(description)){
+            if (!description.isEmpty() && !transaction.getDescription().equalsIgnoreCase(description)) {
                 onOrOff = false;
             }
             //is not empty and does not match any vendor
-            if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)){
+            if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)) {
                 onOrOff = false;
             }
 
-            if (amount != null && transaction.getAmount() >= amount){
+            if (amount != null && transaction.getAmount() >= amount) {
                 onOrOff = false;
             }
 
             //only prints if onOrOff is true
-            if (onOrOff){
+            if (onOrOff) {
                 System.out.println(transaction);
             }
         }
@@ -374,6 +388,7 @@ public class FinancialTracker {
         // TODO – prompt for any combination of date range, description,
         //        vendor, and exact amount, then display matches
     }
+
     /* ------------------------------------------------------------------
        Utility parsers (you can reuse in many places)
        ------------------------------------------------------------------ */
@@ -385,6 +400,7 @@ public class FinancialTracker {
             return null;
         }
     }
+
     private static Double parseDouble(String s) {
         try {
             return Double.parseDouble(s);
