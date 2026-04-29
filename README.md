@@ -4,7 +4,50 @@
 
 this is a simple command line ledger app
 application. The application has a CLI user
-interface that is the Apps-front for users to use the ledger
+interface, the sure has some options as to 
+what they would like to do. in the main menu 
+the user can use 
+
+### main menu
+
+D) Add Deposit.
+
+P) Make Payment (Debit).
+
+L) Ledger.
+
+X) Exit.
+
+L) there is going to be another menu.
+
+### Ledger menu
+
+A) All - Display all entries.
+
+D) Deposits - Display only the entries that are deposits into the account.
+
+P) Payments - Display only the negative entries (or payments).
+
+R) Reports - A new screen that allows the user to run pre-defined reports or
+to run a custom search. 
+
+H) Home - go back to the home page.
+
+### Reports menu
+(1) Month To Date
+
+(2) Previous Month
+
+(3) Year To Date
+
+(4) Previous Year
+
+(5) Search by Vendor - prompt the user for the vendor name and
+display all entries for that vendor
+
+(0) Back - go back to the Ledger page
+
+
 
 ## User Stories
 
