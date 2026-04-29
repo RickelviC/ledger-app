@@ -168,24 +168,35 @@ public class FinancialTracker {
         try {
             BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
 
-            System.out.print("Enter date of transaction (yyyy-MM-dd): ");
-            String inputDate = scanner.nextLine().trim();
-            LocalDate date = parseDate(inputDate);
-
-            System.out.print("Enter time of transaction (HH:mm:ss): ");
-            String inputTime = scanner.nextLine().trim();
-            LocalTime time = LocalTime.parse(inputTime, TIME_FMT);
+            System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
+            String inputDateTime = scanner.nextLine().trim();
+            LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
 
             System.out.print("Enter description of transaction: ");
             String inputDescription = scanner.nextLine().trim();
+            while (inputDescription.isEmpty()) {
+                System.out.print("Please Enter a DESCRIPTION for the transaction: ");
+                inputDescription = scanner.nextLine().trim();
+            }
 
             System.out.print("Enter vendor of transaction: ");
             String inputVendor = scanner.nextLine().trim();
+            while (inputVendor.isEmpty()) {
+                System.out.print("Please Enter a VENDOR for the transaction: ");
+                inputVendor = scanner.nextLine().trim();
+            }
 
             System.out.print("Enter amount of transaction: ");
             double inputAmount = scanner.nextDouble();
+            while (inputAmount <= 0) {
+                System.out.print("Enter A bigger amount for the transaction: ");
+                inputAmount = scanner.nextDouble();
+                scanner.nextLine();
+            }
             double amount = -Math.abs(inputAmount);
-            scanner.nextLine();
+
+            LocalDate date = dateTime.toLocalDate();
+            LocalTime time = dateTime.toLocalTime();
 
             Transaction transaction = new Transaction(date, time, inputDescription, inputVendor, amount);
             transactions.add(transaction);
