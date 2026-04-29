@@ -154,8 +154,6 @@ public class FinancialTracker {
         } catch (Exception ex) {
             System.err.println("something went wrong!!!");
         }
-
-
         // TODO
     }
 
@@ -289,9 +287,10 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1" -> /* TODO – month-to-date report */
+                        //filters transactions from today and the first of this month
                         filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
                 case "2" -> {
-
+                    //filters transactions from the first of last month and the last day of last month
                     LocalDate firstDayOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
                     LocalDate lastDayLastOfMonth = LocalDate.now().withDayOfMonth(1).minusDays(1);
 
@@ -299,6 +298,7 @@ public class FinancialTracker {
                     /* TODO – previous month report */
                 }
                 case "3" -> {
+                    //filters transactions from the first of this year to today
                     LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
 
                     filterTransactionsByDate(firstDayOfYear, LocalDate.now());
@@ -306,6 +306,7 @@ public class FinancialTracker {
                     /* TODO – year-to-date report   */
                 }
                 case "4" -> {
+                    //filters transactions from the first of last year and to the last day of last year
                     LocalDate firstDayOfLastYear = LocalDate.now().minusYears(1).with(TemporalAdjusters.firstDayOfYear());
                     LocalDate lastDayOfLastYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).minusDays(1);
 
@@ -314,6 +315,7 @@ public class FinancialTracker {
                     /* TODO – previous year report  */
                 }
                 case "5" -> {
+                    //filers transactions by vendor name that the user inputs
                     System.out.println("Enter name of vendor");
                     String vendor = scanner.nextLine();
 
@@ -338,7 +340,7 @@ public class FinancialTracker {
         }
         // TODO – iterate transactions, print those within the range
     }
-
+    //filters all transaction by vendor name from user
     private static void filterTransactionsByVendor(String vendor) {
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)) {
@@ -365,6 +367,7 @@ public class FinancialTracker {
         System.out.println("Enter amount");
         Double amount = parseDouble(scanner.nextLine().trim());
 
+        // goes though every transaction in the array and only prints if everything is true
         for (Transaction transaction : transactions) {
             boolean onOrOff = true;
 
