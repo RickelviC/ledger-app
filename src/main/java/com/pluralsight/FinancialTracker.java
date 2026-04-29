@@ -418,9 +418,8 @@ public class FinancialTracker {
         Double amount = parseDouble(scanner.nextLine().trim());
 
         // goes though every transaction in the array and only prints if everything is true
-        boolean onOrOff = true;
         for (Transaction transaction : transactions) {
-            onOrOff = true;
+            boolean onOrOff = true;
 
             //is not null and is before start date
             if (startingDate != null && transaction.getDate().isBefore(startingDate)) {
