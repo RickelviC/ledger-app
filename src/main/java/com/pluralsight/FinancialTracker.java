@@ -173,6 +173,9 @@ public class FinancialTracker {
             buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + amount);
             buffWriter.close();
 
+            System.out.println("Money saved");
+            System.out.println();
+
         } catch (Exception ex) {
             System.err.println("something went wrong!!!");
         }
@@ -234,8 +237,11 @@ public class FinancialTracker {
 
             BufferedWriter buffWriter = new BufferedWriter(new FileWriter(FILE_NAME, true));
             buffWriter.newLine();
-            buffWriter.write(transaction.toString());
+            buffWriter.write(date + "|" + time + "|" + inputDescription + "|" + inputVendor + "|" + -amount);
             buffWriter.close();
+
+            System.out.println("Payment Made");
+            System.out.println();
 
         } catch (Exception ex) {
             System.err.println("something went wrong!!!");
