@@ -1,24 +1,21 @@
-# online-store
+# ledger-app
 
 ## Description of the Project
 
-this is a simple command line Online Store
-application. The application will have a CLI user
-interface that is the storefront for users to shop
-at in a store
+this is a simple command line ledger app
+application. The application has a CLI user
+interface that is the Apps-front for users to use the ledger
 
 ## User Stories
 
-as a customer, I want to view the options i have in the home screen of the store, so that i can see where and what i can do before picking
+as a customer I want to be able to deposit money, and it is saved.
 
-as a customer, I want to view the products i can buy from the store, so that i know what i am going to be buying
+as a customer I want to be able to see a ledger of my history, so I know what has been paid.
 
-as a customer, i want to view all the items i am thinking of buying, so i can rethink if i want to buy them or not
+as a customer I want to be able to search for a report by date or time.
 
-as a customer, i want to view the amount i need to pay, so i can give the right amount of money need for these items
-
+as a customer I want to be able to search by any type of filter I want.
 ## Setup
-
 Instructions on how to set up and run the project using IntelliJ IDEA.
 
 ### Prerequisites
@@ -42,10 +39,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 - Any additional libraries or frameworks used in the project.
 
 ## Demo
-
-Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
-
-![Application Screenshot](path/to/your/screenshot.png)
+https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnJldHd2amVubXlsYzFqbGh3djRybzltdjN5ZmdnenR3MHQ1cjBzdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1XDzNHIqCVKih0GP1e/giphy.gif
 
 ## Future Work
 
@@ -67,8 +61,6 @@ List resources such as tutorials, articles, or documentation that helped you dur
 
 
 ## Thanks
-
-Express gratitude towards those who provided help, guidance, or resources:
 
 - Thank you to Raymon for continuous support and guidance.
 - A special thanks to all teammates for their dedication and teamwork.
