@@ -483,6 +483,7 @@ public class FinancialTracker {
             return null;
         }
     }
+
     private static void sortArray(){
         transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime));
     }
