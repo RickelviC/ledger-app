@@ -27,12 +27,12 @@ public class FinancialTracker {
     private static final File FILE_NAME = new File("transactions.csv");
     //private static final String FILE_NAME = "transactions.csv";
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
-    private static final String TIME_PATTERN = "HH:mm:ss";
+    public static final String DATE_PATTERN = "yyyy-MM-dd";
+    public static final String TIME_PATTERN = "HH:mm:ss";
     private static final String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
 
-    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern(DATE_PATTERN);
-    private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    public static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    public static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern(TIME_PATTERN);
     private static final DateTimeFormatter DATETIME_FMT = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
 
     //colors for table

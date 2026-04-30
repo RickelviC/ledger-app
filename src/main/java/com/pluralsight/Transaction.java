@@ -3,6 +3,10 @@ package com.pluralsight;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
+import static com.pluralsight.FinancialTracker.DATE_FMT;
+import static com.pluralsight.FinancialTracker.TIME_FMT;
+
 public class Transaction {
     private LocalDate date;
     private LocalTime time;
@@ -17,7 +21,6 @@ public class Transaction {
         this.vendor = vendor;
         this.amount = amount;
     }
-
 
     public LocalDate getDate() {
         return date;
@@ -66,6 +69,6 @@ public class Transaction {
     }
     public String toString(LocalDate date, LocalTime time, String description, String vendor, Double amount) {
         return String.format("%s|%s|%s|%s|%.2f",
-                date, time, description, vendor, amount);
+                date.format(DATE_FMT), time.format(TIME_FMT), description, vendor, amount);
     }
 }
