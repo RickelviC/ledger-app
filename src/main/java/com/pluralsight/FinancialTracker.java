@@ -39,7 +39,6 @@ public class FinancialTracker {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
 
     /* ------------------------------------------------------------------
@@ -285,7 +284,7 @@ public class FinancialTracker {
         sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
-            System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
+            colorPrint(transaction);
         }
         tableFooter();
         /* TODO – print all transactions in column format */
@@ -386,7 +385,7 @@ public class FinancialTracker {
         tableHeader();
         for (Transaction transaction : transactions) {
             if (!transaction.getDate().isBefore(start) && transaction.getDate().isBefore(end)) {
-                System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
+                colorPrint(transaction);
             }
         }
         tableFooter();
@@ -399,7 +398,7 @@ public class FinancialTracker {
         tableHeader();
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)) {
-                System.out.println(ANSI_BLUE + transaction + ANSI_RESET);
+                colorPrint(transaction);
             }
         }
         tableFooter();
@@ -452,7 +451,7 @@ public class FinancialTracker {
 
             //only prints if onOrOff is true
             if (onOrOff) {
-                System.out.println(ANSI_BLUE + transaction + ANSI_RESET);
+                colorPrint(transaction);
             }
         }
         tableFooter();
@@ -489,13 +488,21 @@ public class FinancialTracker {
     }
 
     private static void tableHeader() {
-        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
+        System.out.println(ANSI_PURPLE + "-----------+-----------------+-------------------------------------+---------------------------+---------------+");
         System.out.printf("\t%s|\t\t%2s\t |\t\t\t%s\t\t\t\t\t|\t\t%s\t\t\t|\t%s\t\t\t|\n",
                 "Date   ", "Time","Description", "Vendor", "Amount");
-        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
+        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
 
     private static void tableFooter() {
-        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
+        System.out.println(ANSI_PURPLE +"-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
+    }
+
+    private static void colorPrint(Transaction transaction){
+        if (transaction.getAmount() < 0){
+            System.out.println(ANSI_RED + transaction + ANSI_RESET);
+        } else {
+            System.out.println(ANSI_GREEN + transaction + ANSI_RESET);
+        }
     }
 }
