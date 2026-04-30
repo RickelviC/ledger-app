@@ -41,6 +41,7 @@ public class FinancialTracker {
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
 
     /* ------------------------------------------------------------------
        Main menu
@@ -126,7 +127,7 @@ public class FinancialTracker {
         try {
             LocalDateTime dateTime = null;
             while (dateTime == null) {
-                System.out.print("Enter date and time of transaction (yyyy-MM-dd HH:mm:ss): ");
+                System.out.print("Enter date and time of transaction "+ DATETIME_PATTERN + ": ");
                 String inputDateTime = scanner.nextLine().trim();
                 try {
                     dateTime = LocalDateTime.parse(inputDateTime, DATETIME_FMT);
@@ -299,11 +300,17 @@ public class FinancialTracker {
     private static void displayDeposits() {
         sortArray();
         tableHeader();
+        boolean anyFound = false;
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
                 System.out.println(ANSI_GREEN + transaction + ANSI_RESET);
+                anyFound = true;
             }
         }
+        if(!anyFound){
+            System.out.println(ANSI_RED + "No Match found" + ANSI_RESET);
+        }
+
         tableFooter();
         /* TODO – only amount > 0               */
     }
@@ -311,11 +318,16 @@ public class FinancialTracker {
     private static void displayPayments() {
         sortArray();
         tableHeader();
+        boolean anyFound = false;
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
                 System.out.println(ANSI_RED + transaction + ANSI_RESET);
+                anyFound = true;
             }
             /* TODO – only amount < 0               */
+        }
+        if(!anyFound){
+            System.out.println(ANSI_RED + "No Match found" + ANSI_RESET);
         }
         tableFooter();
     }
@@ -391,10 +403,15 @@ public class FinancialTracker {
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         sortArray();
         tableHeader();
+        boolean anyFound = false;
         for (Transaction transaction : transactions) {
             if (!transaction.getDate().isBefore(start) && transaction.getDate().isBefore(end)) {
                 colorPrint(transaction);
+                anyFound = true;
             }
+        }
+        if(!anyFound){
+            System.out.println(ANSI_RED + "No Match found" + ANSI_RESET);
         }
         tableFooter();
         // TODO – iterate transactions, print those within the range
@@ -404,10 +421,15 @@ public class FinancialTracker {
     private static void filterTransactionsByVendor(String vendor) {
         sortArray();
         tableHeader();
+        boolean anyFound = false;
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)) {
                 colorPrint(transaction);
+                anyFound = true;
             }
+        }
+        if(!anyFound){
+            System.out.println(ANSI_RED + "No Match found here" + ANSI_RESET);
         }
         tableFooter();
         // TODO – iterate transactions, print those with matching vendor
@@ -416,10 +438,10 @@ public class FinancialTracker {
     private static void customSearch(Scanner scanner) {
         sortArray();
 
-        System.out.println(ANSI_YELLOW + "Enter starting Date Or skip by pressing Enter (yyyy-MM-dd): ");
+        System.out.println(ANSI_YELLOW + "Enter starting Date Or skip by pressing Enter "+ DATE_PATTERN + ": ");
         LocalDate startingDate = parseDate(scanner.nextLine().trim());
 
-        System.out.println("Enter ending Date Or skip by pressing Enter (yyyy-MM-dd): ");
+        System.out.println("Enter ending Date Or skip by pressing Enter " + DATE_PATTERN + ": ");
         LocalDate endingDate = parseDate(scanner.nextLine().trim());
 
         System.out.println("enter a description Or skip by pressing Enter: ");
@@ -433,6 +455,7 @@ public class FinancialTracker {
 
         // goes though every transaction in the array and only prints if everything is true
         tableHeader();
+        boolean anyFound = false;
         for (Transaction transaction : transactions) {
             boolean onOrOff = true;
 
@@ -460,11 +483,14 @@ public class FinancialTracker {
             //only prints if onOrOff is true
             if (onOrOff) {
                 colorPrint(transaction);
+                anyFound = true;
             }
         }
+
+        if(!anyFound){
+            System.out.println(ANSI_RED + "No Match found" + ANSI_RESET);
+        }
         tableFooter();
-
-
 
         // TODO – prompt for any combination of date range, description,
         //        vendor, and exact amount, then display matches
@@ -496,14 +522,14 @@ public class FinancialTracker {
     }
 
     private static void tableHeader() {
-        System.out.println(ANSI_PURPLE + "-----------+-----------------+-------------------------------------+---------------------------+---------------+");
-        System.out.printf("\t%s|\t\t%2s\t |\t\t\t%s\t\t\t\t\t|\t\t%s\t\t\t|\t\t%s\t\t|\n",
-                "Date   ", "Time","Description", "Vendor", "Amount");
+        System.out.println(ANSI_YELLOW + "-----------+-----------------+-------------------------------------+---------------------------+---------------+");
+        System.out.printf("\t%s|\t\t%3s\t |\t\t\t%s\t\t\t\t   |\t\t%9s\t\t   |\t\t%s |\n",
+                "Date   ","Time","Description","Vendor","Amount");
         System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
 
     private static void tableFooter() {
-        System.out.println(ANSI_PURPLE +"-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW +"-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
 
     private static void colorPrint(Transaction transaction){

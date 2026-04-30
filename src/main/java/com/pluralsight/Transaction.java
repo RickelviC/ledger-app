@@ -67,6 +67,7 @@ public class Transaction {
         return String.format("%10s | %-15s | %-35s | %-25s | $%12.2f |",
                 date.format(DATE_FMT), time.format(TIME_FMT), description, vendor, amount);
     }
+    
     public String toString(LocalDate date, LocalTime time, String description, String vendor, Double amount) {
         return String.format("%s|%s|%s|%s|%.2f",
                 date.format(DATE_FMT), time.format(TIME_FMT), description, vendor, amount);
