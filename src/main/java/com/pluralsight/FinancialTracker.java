@@ -385,7 +385,7 @@ public class FinancialTracker {
         sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
-            if (transaction.getDate().isBefore(end) && transaction.getDate().isAfter(start)) {
+            if (!transaction.getDate().isBefore(start) && transaction.getDate().isBefore(end)) {
                 System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
             }
         }
@@ -446,7 +446,7 @@ public class FinancialTracker {
                 onOrOff = false;
             }
 
-            if (amount != null && transaction.getAmount() >= amount) {
+            if (amount != null && transaction.getAmount() < amount) {
                 onOrOff = false;
             }
 
