@@ -380,7 +380,7 @@ public class FinancialTracker {
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         tableHeader();
         for (Transaction transaction : transactions) {
-            if (transaction.getDate().isBefore(end) && transaction.getDate().isAfter(start)) {
+            if (transaction.getDate().isBefore(end) && !transaction.getDate().isAfter(start)) {
                 System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
             }
         }
