@@ -61,7 +61,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return String.format("%-15s | %-15s | %-35s | %-25s | $%12.2f |",
+        return String.format("%10s | %-15s | %-35s | %-25s | $%12.2f |",
                 date, time, description, vendor, amount);
     }
     public String toString(LocalDate date, LocalTime time, String description, String vendor, Double amount) {

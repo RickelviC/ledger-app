@@ -253,7 +253,7 @@ public class FinancialTracker {
        Ledger menu
        ------------------------------------------------------------------ */
     private static void ledgerMenu(Scanner scanner) {
-        transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime));
+        sortArray();
 
         boolean running = true;
         while (running) {
@@ -282,6 +282,7 @@ public class FinancialTracker {
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
     private static void displayLedger() {
+        sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
             System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
@@ -291,6 +292,7 @@ public class FinancialTracker {
     }
 
     private static void displayDeposits() {
+        sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
@@ -302,6 +304,7 @@ public class FinancialTracker {
     }
 
     private static void displayPayments() {
+        sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
@@ -316,6 +319,7 @@ public class FinancialTracker {
        Reports menu
        ------------------------------------------------------------------ */
     private static void reportsMenu(Scanner scanner) {
+        sortArray();
         boolean running = true;
         while (running) {
             System.out.println("Reports");
@@ -378,9 +382,10 @@ public class FinancialTracker {
        Reporting helpers
        ------------------------------------------------------------------ */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
+        sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
-            if (transaction.getDate().isBefore(end) && !transaction.getDate().isAfter(start)) {
+            if (transaction.getDate().isBefore(end) && transaction.getDate().isAfter(start)) {
                 System.out.println(ANSI_PURPLE + transaction + ANSI_RESET);
             }
         }
@@ -390,6 +395,7 @@ public class FinancialTracker {
 
     //filters all transaction by vendor name from user
     private static void filterTransactionsByVendor(String vendor) {
+        sortArray();
         tableHeader();
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)) {
@@ -401,6 +407,7 @@ public class FinancialTracker {
     }
 
     private static void customSearch(Scanner scanner) {
+        sortArray();
 
         System.out.println("Enter starting Date Or skip by pressing Enter (yyyy-MM-dd): ");
         LocalDate startingDate = parseDate(scanner.nextLine().trim());
@@ -418,6 +425,7 @@ public class FinancialTracker {
         Double amount = parseDouble(scanner.nextLine().trim());
 
         // goes though every transaction in the array and only prints if everything is true
+        tableHeader();
         for (Transaction transaction : transactions) {
             boolean onOrOff = true;
 
@@ -444,11 +452,10 @@ public class FinancialTracker {
 
             //only prints if onOrOff is true
             if (onOrOff) {
-                tableHeader();
                 System.out.println(ANSI_BLUE + transaction + ANSI_RESET);
-                tableFooter();
             }
         }
+        tableFooter();
 
 
 
@@ -476,15 +483,18 @@ public class FinancialTracker {
             return null;
         }
     }
+    private static void sortArray(){
+        transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime));
+    }
 
     private static void tableHeader() {
-        System.out.println("+---------------+------------+---------------------------+----------------------+----------------------+------------+");
-        System.out.printf("-%15s | %-15s | %-35s | %-25s | %-11s |\n",
-                "Date", "Time", "Description", "Vendor", "Amount");
-        System.out.println("+---------------+------------+---------------------------+----------------------+----------------------+------------+");
+        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
+        System.out.printf("\t%s|\t\t%2s\t |\t\t\t%s\t\t\t\t\t|\t\t%s\t\t\t|\t%s\t\t\t|\n",
+                "Date   ", "Time","Description", "Vendor", "Amount");
+        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
     }
 
     private static void tableFooter() {
-        System.out.println("+---------------+------------+---------------------------+----------------------+----------------------+------------+");
+        System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+");
     }
 }
