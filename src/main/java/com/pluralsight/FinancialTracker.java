@@ -287,6 +287,11 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
+    /**
+     * with a for each loop shows every transaction in the
+     * transactions array and calls for the colorPrint method
+     */
+
     private static void displayLedger() {
         sortArray();
         tableHeader();
@@ -297,6 +302,9 @@ public class FinancialTracker {
         /* TODO – print all transactions in column format */
     }
 
+    /**
+     *same as displayLedger but only for positive numbers
+     */
     private static void displayDeposits() {
         sortArray();
         tableHeader();
@@ -315,6 +323,9 @@ public class FinancialTracker {
         /* TODO – only amount > 0               */
     }
 
+    /**
+     *same as displayLedger but only for negative numbers
+     */
     private static void displayPayments() {
         sortArray();
         tableHeader();
@@ -335,6 +346,11 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Reports menu
        ------------------------------------------------------------------ */
+    /**
+     * prints the menu for reports showing 6 options for the user to chose from. each option
+     * from 1-5 calls the filterTransactionsByDate method to compare dates.
+     * option 6 asks user for more information for a custom search
+     */
     private static void reportsMenu(Scanner scanner) {
         sortArray();
         boolean running = true;
@@ -400,6 +416,10 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Reporting helpers
        ------------------------------------------------------------------ */
+    /**
+     * compares 2 dates in the transactions array by using is not before (>=)
+     * the starting date the user inputs and is before (<) the second date the user inputs
+     */
     private static void filterTransactionsByDate(LocalDate start, LocalDate end) {
         sortArray();
         tableHeader();
@@ -418,6 +438,11 @@ public class FinancialTracker {
     }
 
     //filters all transaction by vendor name from user
+    /**
+     * check the transactions array for the vendor the user inputs by going though
+     *  it with a for each and confirming it with an if statement, if no match return
+     *  no match found from a boolean flag
+     */
     private static void filterTransactionsByVendor(String vendor) {
         sortArray();
         tableHeader();
@@ -435,6 +460,12 @@ public class FinancialTracker {
         // TODO – iterate transactions, print those with matching vendor
     }
 
+    /**
+     * ask the user for custom input to search for a specific transaction, if
+     * no match will display no match found. the user is asked 5 questions, and
+     * we check the array for the user input to find a match with if statements,
+     * for a transaction to be printed it needs to pass though all the check we
+     * have. each one sets off a boolean as a flag or if left empty it will be null**/
     private static void customSearch(Scanner scanner) {
         sortArray();
 
@@ -499,6 +530,10 @@ public class FinancialTracker {
     /* ------------------------------------------------------------------
        Utility parsers (you can reuse in many places)
        ------------------------------------------------------------------ */
+
+    /**
+     * when called parse string to Local Date or return null
+     */
     private static LocalDate parseDate(String s) {
         try {
             return LocalDate.parse(s, DATE_FMT);
@@ -508,6 +543,9 @@ public class FinancialTracker {
         }
     }
 
+    /**
+     * when called parse string to a Double or return Null
+     */
     private static Double parseDouble(String s) {
         try {
             return Double.parseDouble(s);
@@ -517,10 +555,17 @@ public class FinancialTracker {
         }
     }
 
+    /**
+     * sorts the array from oldest to newest when called by comparing the
+     * dates and time of the transactions array
+     */
     private static void sortArray(){
         transactions.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime));
     }
 
+    /**
+     * when called prints the header for the table with a simple printf
+     */
     private static void tableHeader() {
         System.out.println(ANSI_YELLOW + "-----------+-----------------+-------------------------------------+---------------------------+---------------+");
         System.out.printf("\t%s|\t\t%3s\t |\t\t\t%s\t\t\t\t   |\t\t%9s\t\t   |\t\t%s |\n",
@@ -528,10 +573,17 @@ public class FinancialTracker {
         System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
 
+    /**
+     * when called prints the footer of the table with println
+     */
     private static void tableFooter() {
         System.out.println(ANSI_YELLOW +"-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
 
+    /**
+     * when called changes the color of the transaction to show negative numbers
+     * as red and positive as green by checking if the amount is < 0
+     */
     private static void colorPrint(Transaction transaction){
         if (transaction.getAmount() < 0){
             System.out.println(ANSI_RED + transaction + ANSI_RESET);
