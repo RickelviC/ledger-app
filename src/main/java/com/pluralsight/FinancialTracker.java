@@ -40,6 +40,7 @@ public class FinancialTracker {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
 
     /* ------------------------------------------------------------------
        Main menu
@@ -51,12 +52,14 @@ public class FinancialTracker {
         boolean running = true;
 
         while (running) {
-            System.out.println("Welcome to Ledger APP");
+            System.out.println(ANSI_PURPLE + "\nWelcome to Ledger APP");
+            System.out.println("-----------------------");
             System.out.println("Choose an option:");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
+            System.out.println("-----------------------" + ANSI_RESET);
 
             String input = scanner.nextLine().trim();
 
@@ -65,7 +68,7 @@ public class FinancialTracker {
                 case "P" -> addPayment(scanner);
                 case "L" -> ledgerMenu(scanner);
                 case "X" -> running = false;
-                default -> System.out.println("Invalid option");
+                default -> System.out.println(ANSI_RED + "Invalid option" + ANSI_RESET);
             }
         }
         scanner.close();
@@ -256,13 +259,16 @@ public class FinancialTracker {
 
         boolean running = true;
         while (running) {
-            System.out.println("Ledger");
+            System.out.println(ANSI_PURPLE + "\nLEDGER MENU");
+            System.out.println("-----------------------");
             System.out.println("Choose an option:");
             System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
             System.out.println("R) Reports");
             System.out.println("H) Home");
+            System.out.println("-----------------------" + ANSI_RESET);
+
 
             String input = scanner.nextLine().trim();
 
@@ -272,7 +278,7 @@ public class FinancialTracker {
                 case "P" -> displayPayments();
                 case "R" -> reportsMenu(scanner);
                 case "H" -> running = false;
-                default -> System.out.println("Invalid option");
+                default -> System.out.println(ANSI_RED + "Invalid option" + ANSI_RESET);
             }
         }
     }
@@ -321,7 +327,8 @@ public class FinancialTracker {
         sortArray();
         boolean running = true;
         while (running) {
-            System.out.println("Reports");
+            System.out.println(ANSI_PURPLE + "\nReports");
+            System.out.println("-----------------------");
             System.out.println("Choose an option:");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
@@ -330,6 +337,7 @@ public class FinancialTracker {
             System.out.println("5) Search by Vendor");
             System.out.println("6) Custom Search");
             System.out.println("0) Back");
+            System.out.println("-----------------------" + ANSI_RESET);
 
             String input = scanner.nextLine().trim();
 
@@ -364,7 +372,7 @@ public class FinancialTracker {
                 }
                 case "5" -> {
                     //filers transactions by vendor name that the user inputs
-                    System.out.println("Enter name of vendor");
+                    System.out.println(ANSI_YELLOW + "Enter name of vendor" + ANSI_RESET);
                     String vendor = scanner.nextLine();
 
                     filterTransactionsByVendor(vendor);
@@ -372,7 +380,7 @@ public class FinancialTracker {
                 }
                 case "6" -> customSearch(scanner);
                 case "0" -> running = false;
-                default -> System.out.println("Invalid option");
+                default -> System.out.println(ANSI_RED + "Invalid option" + ANSI_RESET);
             }
         }
     }
@@ -408,7 +416,7 @@ public class FinancialTracker {
     private static void customSearch(Scanner scanner) {
         sortArray();
 
-        System.out.println("Enter starting Date Or skip by pressing Enter (yyyy-MM-dd): ");
+        System.out.println(ANSI_YELLOW + "Enter starting Date Or skip by pressing Enter (yyyy-MM-dd): ");
         LocalDate startingDate = parseDate(scanner.nextLine().trim());
 
         System.out.println("Enter ending Date Or skip by pressing Enter (yyyy-MM-dd): ");
@@ -420,7 +428,7 @@ public class FinancialTracker {
         System.out.println("Enter name of vendor Or skip by pressing Enter: ");
         String vendor = scanner.nextLine().trim();
 
-        System.out.println("Enter amount Or skip by pressing Enter: ");
+        System.out.println("Enter amount Or skip by pressing Enter: " + ANSI_RESET);
         Double amount = parseDouble(scanner.nextLine().trim());
 
         // goes though every transaction in the array and only prints if everything is true
@@ -489,7 +497,7 @@ public class FinancialTracker {
 
     private static void tableHeader() {
         System.out.println(ANSI_PURPLE + "-----------+-----------------+-------------------------------------+---------------------------+---------------+");
-        System.out.printf("\t%s|\t\t%2s\t |\t\t\t%s\t\t\t\t\t|\t\t%s\t\t\t|\t%s\t\t\t|\n",
+        System.out.printf("\t%s|\t\t%2s\t |\t\t\t%s\t\t\t\t\t|\t\t%s\t\t\t|\t\t%s\t\t|\n",
                 "Date   ", "Time","Description", "Vendor", "Amount");
         System.out.println("-----------+-----------------+-------------------------------------+---------------------------+---------------+" + ANSI_RESET);
     }
