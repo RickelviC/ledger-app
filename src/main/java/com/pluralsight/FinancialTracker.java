@@ -446,7 +446,7 @@ public class FinancialTracker {
                 onOrOff = false;
             }
 
-            if (amount != null && transaction.getAmount() < amount) {
+            if (amount != null && Math.abs(transaction.getAmount()) < amount) {
                 onOrOff = false;
             }
 
